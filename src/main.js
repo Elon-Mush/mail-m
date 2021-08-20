@@ -4,13 +4,13 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 import 'lib-flexible/flexible'
-import 'vant/lib/index.css'
+import 'vant/lib/index.css'; // 全局引入样式
 
-const app = createApp(App)
+const app = createApp(App) // 创建实例
 
 // 全局过滤器
 app.config.globalProperties.$filters = {
-  prefix (url) {
+  prefix(url) {
     if (url && url.startsWith('http')) {
       return url
     } else {

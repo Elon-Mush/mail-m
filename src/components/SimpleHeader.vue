@@ -27,7 +27,7 @@ export default {
     }
   },
   emits: ['callback'],
-  setup (props, ctx) {
+  setup(props, ctx) {
     const isback = ref(props.noback)
     const router = useRouter()
     const goBack = () => {

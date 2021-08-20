@@ -1,5 +1,5 @@
 {
-  "name": "mall-m",
+  "name": "newbee-mall-vue3-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,36 +8,30 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "better-scroll": "^2.4.2",
+    "axios": "^0.20.0",
+    "better-scroll": "^2.3.0",
     "core-js": "^3.6.5",
     "js-md5": "^0.7.3",
     "lib-flexible": "^0.3.2",
     "pushstate-server": "^3.1.0",
-    "vant": "^3.2.0",
+    "vant": "^3.0.0-beta.5",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0",
+    "vue-router": "^4.0.0-beta.13",
     "vue2-verify": "^1.1.5",
-    "vuex": "^4.0.0-0"
+    "vuex": "^4.0.0-beta.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
-    "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-import": "^1.13.1",
     "eslint": "^6.7.2",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^7.0.0",
-    "less": "^3.0.4",
-    "less-loader": "^5.0.0",
-    "lint-staged": "^9.5.0"
+    "eslint-plugin-vue": "^7.0.0-0",
+    "less": "^3.12.2",
+    "less-loader": "^7.0.2",
+    "postcss-pxtorem": "^5.1.1"
   },
   "eslintConfig": {
     "root": true,
@@ -46,7 +40,7 @@
     },
     "extends": [
       "plugin:vue/vue3-essential",
-      "@vue/standard"
+      "eslint:recommended"
     ],
     "parserOptions": {
       "parser": "babel-eslint"
@@ -57,14 +51,5 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ],
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,vue}": [
-      "vue-cli-service lint",
-      "git add"
-    ]
-  }
+  ]
 }

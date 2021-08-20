@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHashHistory(), 
   routes: [
     {
       path: '/',
@@ -21,14 +21,6 @@ const router = createRouter({
       component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
       meta: {
         index: 1
-      }
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
-      meta: {
-        index: 2
       }
     },
     {
@@ -118,7 +110,7 @@ const router = createRouter({
       meta: {
         index: 3
       }
-    }
+    },
   ]
 })
 

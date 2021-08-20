@@ -58,29 +58,29 @@ export default {
       default: 20
     }
   },
-  mounted () {
+  mounted() {
     // 在 DOM 渲染完毕后初始化 better-scroll
     this.$nextTick(() => {
       this.initScroll()
     })
   },
-  updated () {
+  updated() {
     this.bs.refresh()
   },
   methods: {
-    initScroll () {
+    initScroll() {
       // better-scroll 初始化
       this.bs = new BScroll(this.$refs.wrapper, {
         probeType: 3,
         click: true
       })
       this.bs.on('scroll', () => {
-        console.log('scrolling-')
-      })
-      this.bs.on('scrollEnd', () => {
-        console.log('scrollingEnd')
-      })
-    }
+          console.log('scrolling-')
+        })
+        this.bs.on('scrollEnd', () => {
+          console.log('scrollingEnd')
+        })
+    } 
   }
 }
 </script>

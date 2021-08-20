@@ -1,21 +1,11 @@
 import { createStore } from 'vuex'
-import { getCart } from '../service/cart'
+import state from './state'
+import actions from './actions'
+import mutations from './mutations'
 
 export default createStore({
-  state: {
-    cartCount: 0
-  },
-  mutations: {
-    addCart (state, payload) {
-      state.cartCount = payload.count
-    }
-  },
-  actions: {
-    async updateCart (ctx) {
-      const { data } = await getCart()
-      ctx.commit('addCart', {
-        count: data.length || 0
-      })
-    }
-  }
+  state,
+  mutations,
+  actions,
+  modules: {}
 })

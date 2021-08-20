@@ -27,7 +27,7 @@ import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { getLocal } from '@/common/js/utils'
 export default {
-  setup () {
+  setup() {
     const route = useRoute()
     const store = useStore()
     onMounted(() => {

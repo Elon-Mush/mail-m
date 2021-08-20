@@ -52,14 +52,14 @@ import { reactive, onMounted, ref, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import navBar from '@/components/NavBar'
 import listScroll from '@/components/ListScroll'
-import { getCategory } from '@/service/good'
+import { getCategory } from "@/service/good";
 import { Toast } from 'vant'
 export default {
   components: {
     navBar,
     listScroll
   },
-  setup () {
+  setup() {
     const router = useRouter()
     // composition API 获取 refs 的形式
     const searchWrap = ref(null)
@@ -69,7 +69,7 @@ export default {
     })
 
     onMounted(async () => {
-      const $screenHeight = document.documentElement.clientHeight
+      let $screenHeight = document.documentElement.clientHeight
       console.log('searchWrap.value', searchWrap.value)
       searchWrap.value.style.height = $screenHeight - 100 + 'px'
       Toast.loading('加载中...')

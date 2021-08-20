@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 <template>
   <div class="address-edit-box">
     <s-header :name="`${type == 'add' ? '新增地址' : '编辑地址'}`"></s-header>
@@ -28,7 +27,7 @@ export default {
   components: {
     sHeader
   },
-  setup () {
+  setup() {
     const route = useRoute()
     const router = useRouter()
     const state = reactive({
@@ -46,39 +45,38 @@ export default {
 
     onMounted(async () => {
       // 省市区列表构造
-      const ProvinceList = {}
-      const CityList = {}
-      const CountyList = {}
+      let _province_list = {}
+      let _city_list = {}
+      let _county_list = {}
       tdist.getLev1().forEach(p => {
-        ProvinceList[p.id] = p.text
+        _province_list[p.id] = p.text
         tdist.getLev2(p.id).forEach(c => {
-          CityList[c.id] = c.text
-          // eslint-disable-next-line no-return-assign
-          tdist.getLev3(c.id).forEach(q => CountyList[q.id] = q.text)
+          _city_list[c.id] = c.text
+          tdist.getLev3(c.id).forEach(q => _county_list[q.id] = q.text)
         })
       })
-      state.areaList.province_list = ProvinceList
-      state.areaList.city_list = CityList
-      state.areaList.county_list = CountyList
+      state.areaList.province_list = _province_list
+      state.areaList.city_list = _city_list
+      state.areaList.county_list = _county_list
 
       const { addressId, type, from } = route.query
       state.addressId = addressId
       state.type = type
       state.from = from || ''
-      if (type === 'edit') {
+      if (type == 'edit') {
         const { data: addressDetail } = await getAddressDetail(addressId)
         let _areaCode = ''
         const province = tdist.getLev1()
         Object.entries(state.areaList.county_list).forEach(([id, text]) => {
           // 先找出当前对应的区
-          if (text === addressDetail.regionName) {
+          if (text == addressDetail.regionName) {
             // 找到区对应的几个省份
-            const provinceIndex = province.findIndex(item => item.id.substr(0, 2) === id.substr(0, 2))
+            const provinceIndex = province.findIndex(item => item.id.substr(0, 2) == id.substr(0, 2))
             // 找到区对应的几个市区
             // eslint-disable-next-line no-unused-vars
-            const cityItem = Object.entries(state.areaList.city_list).filter(([cityId, cityName]) => cityId.substr(0, 4) === id.substr(0, 4))[0]
+            const cityItem = Object.entries(state.areaList.city_list).filter(([cityId, cityName]) => cityId.substr(0, 4) == id.substr(0, 4))[0]
             // 对比找到的省份和接口返回的省份是否相等，因为有一些区会重名
-            if (province[provinceIndex].text === addressDetail.provinceName && cityItem[1] === addressDetail.cityName) {
+            if (province[provinceIndex].text == addressDetail.provinceName && cityItem[1] == addressDetail.cityName) {
               _areaCode = id
             }
           }
@@ -105,12 +103,12 @@ export default {
         cityName: content.city,
         regionName: content.county,
         detailAddress: content.addressDetail,
-        defaultFlag: content.isDefault ? 1 : 0
+        defaultFlag: content.isDefault ? 1 : 0,
       }
-      if (state.type === 'edit') {
-        params.addressId = state.addressId
+      if (state.type == 'edit') {
+        params['addressId'] = state.addressId
       }
-      await state.type === 'add' ? addAddress(params) : EditAddress(params)
+      await state.type == 'add' ? addAddress(params) : EditAddress(params)
       Toast('保存成功')
       setTimeout(() => {
         router.back()

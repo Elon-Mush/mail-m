@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <s-header :name="type == 'login' ? '登录' : '注册'" :back="'/home'"></s-header>
-    <img class="logo" src="https://s.yezgea02.com/1604045825972/newbee-mall-vue3-app-logo.png">
+    <img class="logo" src="https://s.yezgea02.com/1604045825972/newbee-mall-vue3-app-logo.png" alt="">
     <div v-if="type == 'login'" class="login-body login">
       <van-form @submit="onSubmit">
         <van-field
@@ -82,7 +82,7 @@ import { setLocal } from '@/common/js/utils'
 import md5 from 'js-md5'
 import { Toast } from 'vant'
 export default {
-  setup () {
+  setup() {
     const verifyRef = ref(null)
     const state = reactive({
       username: '',
@@ -104,22 +104,22 @@ export default {
     const onSubmit = async (values) => {
       console.log('verifyRef.value.imgCode', verifyRef.value.imgCode)
       state.imgCode = verifyRef.value.imgCode || ''
-      if (state.verify.toLowerCase() !== state.imgCode.toLowerCase()) {
+      if (state.verify.toLowerCase() != state.imgCode.toLowerCase()) {
         Toast.fail('验证码有误')
         return
       }
-      if (state.type === 'login') {
+      if (state.type == 'login') {
         const { data } = await login({
-          loginName: values.username,
-          passwordMd5: md5(values.password)
+          "loginName": values.username,
+          "passwordMd5": md5(values.password)
         })
         setLocal('token', data)
         // 需要刷新页面，否则 axios.js 文件里的 token 不会被重置
         window.location.href = '/'
       } else {
         await register({
-          loginName: values.username1,
-          password: values.password1
+          "loginName": values.username1,
+          "password": values.password1
         })
         Toast.success('注册成功')
         state.type = 'login'

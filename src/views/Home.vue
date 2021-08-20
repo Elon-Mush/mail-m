@@ -1,65 +1,61 @@
 <template>
   <div>
     <header class="home-header wrap" :class="{'active' : headerScroll}">
-        <router-link tag="i" to="./category"><i class="nbicon nbmenu2"></i></router-link>
-        <div class="header-search">
-          <span class="app-name">新蜂商城</span>
-          <i class="iconfont icon-search"></i>
-          <router-link tag="span" class="search-title" to="./product-list?from=home">山河无恙，人间皆安</router-link>
-        </div>
-        <router-link class="login" tag="span" to="./login" v-if="!isLogin">登录</router-link>
-        <router-link class="login" tag="span" to="./user" v-else>
-          <van-icon name="manager-o" />
-        </router-link>
-      </header>
-
+      <router-link tag="i" to="./category"><i class="nbicon nbmenu2"></i></router-link>
+      <div class="header-search">
+        <span class="app-name">大米商城</span>
+        <i class="iconfont icon-search"></i>
+        <router-link tag="span" class="search-title" to="./product-list?from=home">Redme</router-link>
+      </div>
+      <router-link class="login" tag="span" to="./login" v-if="!isLogin">登录</router-link>
+      <router-link class="login" tag="span" to="./user" v-else>
+        <van-icon name="manager-o" />
+      </router-link>
+    </header>
     <nav-bar />
-
     <swiper :list="swiperList"></swiper>
-
     <div class="category-list">
-        <div v-for="item in categoryList" v-bind:key="item.categoryId" @click="tips">
-          <img :src="item.imgUrl">
-          <span>{{item.name}}</span>
+      <div v-for="item in categoryList" v-bind:key="item.categoryId" @click="tips">
+        <img :src="item.imgUrl">
+        <span>{{item.name}}</span>
+      </div>
+    </div>
+    <div class="good">
+      <header class="good-header">新品上线</header>
+      <van-skeleton title :row="3" :loading="loading">
+        <div class="good-box">
+          <div class="good-item" v-for="item in newGoodses" :key="item.goodsId" @click="goToDetail(item)">
+            <img :src="$filters.prefix(item.goodsCoverImg)">
+            <div class="good-desc">
+              <div class="title">{{ item.goodsName }}</div>
+              <div class="price">¥ {{ item.sellingPrice }}</div>
+            </div>
+          </div>
         </div>
-      </div>
-
+      </van-skeleton>
+    </div>
+    
     <div class="good">
-        <header class="good-header">新品上线</header>
-        <van-skeleton title :row="3" :loading="loading">
-          <div class="good-box">
-            <div class="good-item" v-for="item in newGoodses" :key="item.goodsId" @click="goToDetail(item)">
-              <img :src="$filters.prefix(item.goodsCoverImg)" alt="">
-              <div class="good-desc">
-                <div class="title">{{ item.goodsName }}</div>
-                <div class="price">¥ {{ item.sellingPrice }}</div>
-              </div>
+      <header class="good-header">热门商品</header>
+      <van-skeleton title :row="3" :loading="loading">
+        <div class="good-box">
+          <div class="good-item" v-for="item in hots" :key="item.goodsId" @click="goToDetail(item)">
+            <img :src="$filters.prefix(item.goodsCoverImg)">
+            <div class="good-desc">
+              <div class="title">{{ item.goodsName }}</div>
+              <div class="price">¥ {{ item.sellingPrice }}</div>
             </div>
           </div>
-        </van-skeleton>
-      </div>
-
-    <div class="good">
-        <header class="good-header">热门商品</header>
-        <van-skeleton title :row="3" :loading="loading">
-          <div class="good-box">
-            <div class="good-item" v-for="item in hots" :key="item.goodsId" @click="goToDetail(item)">
-              <img :src="$filters.prefix(item.goodsCoverImg)" alt="">
-              <div class="good-desc">
-                <div class="title">{{ item.goodsName }}</div>
-                <div class="price">¥ {{ item.sellingPrice }}</div>
-              </div>
-            </div>
-          </div>
-        </van-skeleton>
-      </div>
+        </div>
+      </van-skeleton>
+    </div>
 
     <div class="good" :style="{ paddingBottom: '100px'}">
       <header class="good-header">最新推荐</header>
       <van-skeleton title :row="3" :loading="loading">
         <div class="good-box">
           <div class="good-item" v-for="item in recommends" :key="item.goodsId" @click="goToDetail(item)">
-            <img :src="$filters.prefix(item.goodsCoverImg)" alt="">
+            <img :src="$filters.prefix(item.goodsCoverImg)">
             <div class="good-desc">
               <div class="title">{{ item.goodsName }}</div>
               <div class="price">¥ {{ item.sellingPrice }}</div>
@@ -80,12 +76,12 @@ import { getHome } from '@/service/home'
 import { getLocal } from '@/common/js/utils'
 import { Toast } from 'vant'
 export default {
-  name: 'Home',
+  name: 'home',
   components: {
     swiper,
     navBar
   },
-  setup () {
+  setup() {
     const router = useRouter()
     const state = reactive({
       swiperList: [], // 轮播图列表
@@ -96,11 +92,11 @@ export default {
       recommends: [],
       categoryList: [
         {
-          name: '新蜂超市',
+          name: '大米超市',
           imgUrl: 'https://s.yezgea02.com/1604041127880/%E8%B6%85%E5%B8%82%402x.png',
           categoryId: 100001
         }, {
-          name: '新蜂服饰',
+          name: '大米服饰',
           imgUrl: 'https://s.yezgea02.com/1604041127880/%E6%9C%8D%E9%A5%B0%402x.png',
           categoryId: 100003
         }, {
@@ -108,11 +104,11 @@ export default {
           imgUrl: 'https://s.yezgea02.com/1604041127880/%E5%85%A8%E7%90%83%E8%B4%AD%402x.png',
           categoryId: 100002
         }, {
-          name: '新蜂生鲜',
+          name: '大米生鲜',
           imgUrl: 'https://s.yezgea02.com/1604041127880/%E7%94%9F%E9%B2%9C%402x.png',
           categoryId: 100004
         }, {
-          name: '新蜂到家',
+          name: '大米到家',
           imgUrl: 'https://s.yezgea02.com/1604041127880/%E5%88%B0%E5%AE%B6%402x.png',
           categoryId: 100005
         }, {
@@ -147,7 +143,7 @@ export default {
       Toast.loading({
         message: '加载中...',
         forbidClick: true
-      })
+      });
       const { data } = await getHome()
       state.swiperList = data.carousels
       state.newGoodses = data.newGoodses
@@ -159,7 +155,7 @@ export default {
 
     nextTick(() => {
       window.addEventListener('scroll', () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
         scrollTop > 100 ? state.headerScroll = true : state.headerScroll = false
       })
     })
@@ -169,7 +165,7 @@ export default {
     }
 
     const tips = () => {
-      Toast('敬请期待')
+      Toast('敬请期待');
     }
 
     return {
@@ -177,7 +173,7 @@ export default {
       goToDetail,
       tips
     }
-  }
+  },
 }
 </script>
 

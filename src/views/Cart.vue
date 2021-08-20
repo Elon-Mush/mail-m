@@ -6,7 +6,7 @@
         <van-swipe-cell :right-width="50" v-for="(item, index) in list" :key="index">
           <div class="good-item">
             <van-checkbox :name="item.cartItemId" />
-            <div class="good-img"><img :src="$filters.prefix(item.goodsCoverImg)" alt=""></div>
+            <div class="good-img"><img :src="$filters.prefix(item.goodsCoverImg)"></div>
             <div class="good-desc">
               <div class="good-title">
                 <span>{{ item.goodsName }}</span>
@@ -50,7 +50,7 @@
     <div class="empty" v-if="!list.length">
       <img class="empty-cart" src="https://s.yezgea02.com/1604028375097/empty-car.png" alt="空购物车">
       <div class="title">购物车空空如也</div>
-      <van-button round color="#1baeae" type="primary" @click="goTo" block>前往选购</van-button>
+      <van-button round color="#f37d0f" type="primary" @click="goTo" block>前往选购</van-button>
     </div>
     <nav-bar></nav-bar>
   </div>
@@ -70,7 +70,7 @@ export default {
     navBar,
     sHeader
   },
-  setup () {
+  setup() {
     const router = useRouter()
     const store = useStore()
     const state = reactive({
@@ -86,7 +86,7 @@ export default {
     })
 
     const init = async () => {
-      Toast.loading({ message: '加载中...', forbidClick: true })
+      Toast.loading({ message: '加载中...', forbidClick: true });
       const { data } = await getCart({ pageNumber: 1 })
       state.list = data
       state.result = data.map(item => item.cartItemId)
@@ -95,7 +95,7 @@ export default {
 
     const total = computed(() => {
       let sum = 0
-      const _list = state.list.filter(item => state.result.includes(item.cartItemId))
+      let _list = state.list.filter(item => state.result.includes(item.cartItemId))
       _list.forEach(item => {
         sum += item.goodsCount * item.sellingPrice
       })
@@ -119,23 +119,23 @@ export default {
         Toast.fail('商品不得小于0')
         return
       }
-      if (state.list.filter(item => item.cartItemId === detail.name)[0].goodsCount === value) return
-      Toast.loading({ message: '修改中...', forbidClick: true })
+      if (state.list.filter(item => item.cartItemId == detail.name)[0].goodsCount == value) return
+      Toast.loading({ message: '修改中...', forbidClick: true });
       const params = {
         cartItemId: detail.name,
         goodsCount: value
       }
       await modifyCart(params)
       state.list.forEach(item => {
-        if (item.cartItemId === detail.name) {
+        if (item.cartItemId == detail.name) {
           item.goodsCount = value
         }
       })
-      Toast.clear()
+      Toast.clear();
     }
 
     const onSubmit = async () => {
-      if (state.result.length === 0) {
+      if (state.result.length == 0) {
         Toast.fail('请选择商品进行结算')
         return
       }
@@ -151,7 +151,7 @@ export default {
 
     const groupChange = (result) => {
       console.log(1)
-      if (result.length === state.list.length) {
+      if (result.length == state.list.length) {
         console.log(2)
         state.checkAll = true
       } else {
@@ -160,7 +160,7 @@ export default {
       }
       state.result = result
     }
-
+    
     const allCheck = () => {
       if (!state.checkAll) {
         state.result = state.list.map(item => item.cartItemId)
@@ -168,6 +168,8 @@ export default {
         state.result = []
       }
     }
+
+    
 
     return {
       ...toRefs(state),

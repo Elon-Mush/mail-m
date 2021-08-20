@@ -1,4 +1,3 @@
-
 <template>
   <div class="product-list-wrap">
     <div class="product-list-content">
@@ -13,7 +12,7 @@
         </div>
         <span class="search-btn" @click="getSearch">搜索</span>
       </header>
-      <van-tabs type="card" color="#1baeae" @click="changeTab" >
+      <van-tabs type="card" color="#f3540b" @click="changeTab" >
         <van-tab title="推荐" name=""></van-tab>
         <van-tab title="新品" name="new"></van-tab>
         <van-tab title="价格" name="price"></van-tab>
@@ -51,7 +50,7 @@ import { reactive, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { search } from '@/service/good'
 export default {
-  setup () {
+  setup() {
     const route = useRoute()
     const router = useRouter()
     const state = reactive({
@@ -77,20 +76,14 @@ export default {
       if (!categoryId && !state.keyword) {
         // Toast.fail('请输入关键词')
         state.finished = true
-        state.loading = false
+        state.loading = false;
         return
       }
-      const { data, data: { list } } = await search(
-        {
-          pageNumber: state.page,
-          goodsCategoryId: categoryId,
-          keyword: state.keyword,
-          orderBy: state.orderBy
-        })
-
+      const { data, data: { list } } = await search({ pageNumber: state.page, goodsCategoryId: categoryId, keyword: state.keyword, orderBy: state.orderBy })
+      
       state.productList = state.productList.concat(list)
       state.totalPage = data.totalPage
-      state.loading = false
+      state.loading = false;
       if (state.page >= data.totalPage) state.finished = true
     }
 
@@ -111,8 +104,8 @@ export default {
         state.page = state.page + 1
       }
       if (state.refreshing) {
-        state.productList = []
-        state.refreshing = false
+        state.productList = [];
+        state.refreshing = false;
       }
       init()
     }
@@ -208,7 +201,7 @@ export default {
   .content {
     height: calc(~"(100vh - 70px)");
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: scroll; 
     margin-top: 78px;
   }
   .product-list-refresh {
